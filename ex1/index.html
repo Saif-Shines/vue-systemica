@@ -5,11 +5,71 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
-  <title>Document</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <title>Characters</title>
 </head>
 
 <body>
-  <h1>Sheldon is a bad room mate</h1>
+  <h1>Guess the characters of <mark>The Big Bang Theory</mark></h1>
+  <section>
+    Here are some key facts about the TV sitcom The Big Bang Theory:
+
+    <ol>
+      <li>It aired on CBS from 2007 to 2019 for a total of 279 episodes over 12 seasons.</li>
+      <li>The show was centered around a group of nerdy scientists and their friendships with an aspiring actress named
+        Penny.</li>
+      <li>The main characters were Sheldon Cooper, Leonard Hofstadter, Howard Wolowitz, and Raj Koothrappali, who all
+        worked
+        at
+        Caltech.</li>
+      <li>Notable recurring characters included Penny, Amy Farrah Fowler, Bernadette Rostenkowski, Stuart Bloom, and
+        Barry
+        Kripke.</li>
+      <li>Jim Parsons played the role of Sheldon Cooper, a theoretical physicist known for his brilliant mind but
+        awkward
+        social
+        skills.</li>
+      <li>The show derived humor from the contrast between the scientists' personalities and their more streetwise
+        neighbor
+        Penny.</li>
+      <li>Signature elements included Sheldon's fixation on his spot on the couch, his love of Star Trek, and his knocks
+        on
+        Penny's door.</li>
+      <li>The show was a ratings hit and won 10 Emmy Awards including four for Jim Parsons as Lead Actor.
+      </li>
+      <li>The popularity of the show helped bring nerd culture into the mainstream and inspired young viewers to pursue
+        STEM
+        careers.</li>
+      <li>It also promoted discussion on topics like gender stereotypes and portrayals of scientists in media.
+      </li>
+    </ol>
+
+    <p>In summary, The Big Bang Theory was lauded as one of the most successful sitcoms centered around nerd culture and
+      science.</p>
+  </section>
+  <section id="app">
+    <h2>{{title}}</h2>
+    <input type="text" size="30" maxlength="30" placeholder="Character" aria-label="character box" v-model="answer">
+    <br>
+    <div v-if="characters.includes(answer)"> {{right}}</div>
+    <div v-else>{{wrong}}</div>
+  </section>
 </body>
+
+<script>
+  const { createApp } = Vue
+  const app = createApp({
+    data() {
+      return {
+        title: "The Game: Guess the Characters in the show?",
+        characters: ["Penny", "Sheldon", "Leonard", "Raj", "Bernadette", "Amy"],
+        right: "✔️ You are absolutely correct!",
+        wrong: "⚠️ Oops! You did not watch The Big Bang Theory Properly!",
+        answer: ''
+      }
+    }
+  }); // app is just that validator
+  app.mount("#app")
+</script>
 
 </html>
