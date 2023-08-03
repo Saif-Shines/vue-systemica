@@ -1,0 +1,44 @@
+# Dependencies
+node_modules/
+
+# Production
+build/
+dist/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# Environment variables
+.env
+.env.production
+
+# Editor files
+.vscode/
+.idea/
+
+# OS generated files
+Thumbs.db
+.DS_Store
+
+# Ignore npm/yarn lock files
+package-lock.json
+yarn.lock
+
+# Misc
+*.zip
+*.tmp
+*.swp
+
+# Credentials
+*.pem
+*.crt
+*rsa*
+*creds*
+
+# Misc
+.tmp
+*.bak
+*.swp
+*~
