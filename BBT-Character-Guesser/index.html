@@ -25,23 +25,6 @@
       <li>Notable recurring characters included Penny, Amy Farrah Fowler, Bernadette Rostenkowski, Stuart Bloom, and
         Barry
         Kripke.</li>
-      <li>Jim Parsons played the role of Sheldon Cooper, a theoretical physicist known for his brilliant mind but
-        awkward
-        social
-        skills.</li>
-      <li>The show derived humor from the contrast between the scientists' personalities and their more streetwise
-        neighbor
-        Penny.</li>
-      <li>Signature elements included Sheldon's fixation on his spot on the couch, his love of Star Trek, and his knocks
-        on
-        Penny's door.</li>
-      <li>The show was a ratings hit and won 10 Emmy Awards including four for Jim Parsons as Lead Actor.
-      </li>
-      <li>The popularity of the show helped bring nerd culture into the mainstream and inspired young viewers to pursue
-        STEM
-        careers.</li>
-      <li>It also promoted discussion on topics like gender stereotypes and portrayals of scientists in media.
-      </li>
     </ol>
 
     <p>In summary, The Big Bang Theory was lauded as one of the most successful sitcoms centered around nerd culture and
@@ -49,10 +32,30 @@
   </section>
   <section id="app">
     <h2>{{title}}</h2>
+    <aside>
+      <h3>Favorite Characters</h3>
+      <ol>
+        <li v-for="fav in favoriteCharacters">{{fav}}</li>
+      </ol>
+    </aside>
     <input type="text" size="30" maxlength="30" placeholder="Character" aria-label="character box" v-model="answer">
     <br>
-    <div v-if="characters.includes(answer)"> {{right}}</div>
-    <div v-else>{{wrong}}</div>
+    <div v-if="answer == ''">❗Type your answer</div>
+    <div v-else-if="characters.includes(answer.toLowerCase())">{{right}}
+      <label for="addCharacter">Did we miss an character? Add it!</label>
+      <input type="text" id="addCharacter" v-model="newCharacter">
+      <button @click="addToCharacterList(newCharacter)" class="favorite-btn">Add</button>
+    </div>
+    <div v-else>
+      {{wrong}}
+      <hr />
+      <ul>
+        <li v-for="actor in characters">
+          {{actor}}
+          <button class="favorite-btn" @click="addtoFavList(actor)">Mark Favorite</button>
+        </li>
+      </ul>
+    </div>
   </section>
 </body>
 
@@ -61,11 +64,24 @@
   const app = createApp({
     data() {
       return {
-        title: "The Game: Guess the Characters in the show?",
-        characters: ["Penny", "Sheldon", "Leonard", "Raj", "Bernadette", "Amy"],
+        title: "Who are the characters in the show?",
+        characters: ["penny", "sheldon", "leonard", "raj", "bernadette", "amy"],
         right: "✔️ You are absolutely correct!",
         wrong: "⚠️ Oops! You did not watch The Big Bang Theory Properly!",
-        answer: ''
+        answer: '',
+        newCharacter: '',
+        favoriteCharacters: []
+      }
+    },
+    methods: {
+      addtoFavList(value) {
+        console.log('value', value)
+        this.favoriteCharacters.push(value)
+        console.log(this.favoriteCharacters)
+      },
+      addToCharacterList(newCharacter) {
+        this.characters.push(newCharacter.toLowerCase())
+        console.info('all characters now', this.characters)
       }
     }
   }); // app is just that validator
