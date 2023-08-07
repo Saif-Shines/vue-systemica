@@ -40,7 +40,7 @@
     <aside>
       <h3>Favorite Characters</h3>
       <ol>
-        <li v-for="fav in favoriteCharacters">{{fav}}</li>
+        <li v-for="fav in favoriteCharacters">{{capitalizeFirstWord(fav.name)}}</li>
       </ol>
     </aside>
     <input type="text" size="30" maxlength="30" placeholder="Character" aria-label="character box" v-model="answer">
@@ -122,7 +122,9 @@
         console.log(this.favoriteCharacters)
       },
       addToCharacterList(newCharacter) {
-        this.characters.push(newCharacter.toLowerCase())
+        console.log('newCharacter', newCharacter)
+        let capitalizedName = this.capitalizeFirstWord(newCharacter)
+        this.characters.push({ name: capitalizedName })
         console.info('all characters now', this.characters)
       },
       capitalizeFirstWord(string) {
