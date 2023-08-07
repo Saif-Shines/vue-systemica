@@ -63,7 +63,7 @@
       </ul>
     </div>
     <div class="stats">
-
+      The total age of the F.R.I.E.N.D.S Group: {{totalAgeOfGroup}}
     </div>
   </section>
 
@@ -113,6 +113,22 @@
         answer: '',
         newCharacter: '',
         favoriteCharacters: []
+      }
+    },
+    computed: {
+      totalAgeOfGroup() {
+        let xSum = 0;
+
+        for (let obj of this.characters) {
+          for (let key in obj) {
+            if (key === 'age') {
+              xSum += obj[key];
+            }
+          }
+        }
+
+        console.log(xSum); // 9
+        return xSum;
       }
     },
     methods: {
