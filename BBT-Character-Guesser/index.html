@@ -46,7 +46,8 @@
     <input type="text" size="30" maxlength="30" placeholder="Character" aria-label="character box" v-model="answer">
     <br>
     <div v-if="answer == ''">❗Type your answer</div>
-    <div v-else-if="characters.includes(answer.toLowerCase())">{{right}}
+    <div v-else-if="characters.some((actor) => actor.name == answer.toLowerCase())">
+      {{right}}
       <label for="addCharacter">Did we miss an character? Add it!</label>
       <input type="text" id="addCharacter" v-model="newCharacter">
       <button @click="addToCharacterList(newCharacter)" class="favorite-btn">Add</button>
@@ -56,30 +57,13 @@
       <hr />
       <ul>
         <li v-for="actor in characters">
-          {{actor}}
+          {{capitalizeFirstWord(actor.name)}}
           <button class="favorite-btn" @click="addtoFavList(actor)">Mark Favorite</button>
         </li>
       </ul>
     </div>
-    <div class="details">
-      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Beatae sequi amet mollitia at. Assumenda ab
-      necessitatibus
-      nulla cum provident consequuntur facere architecto rerum illo, illum minima recusandae a exercitationem
-      doloremque.
-      Voluptatibus quae nulla, sequi aspernatur porro nesciunt nemo voluptate. Voluptatem a quae numquam delectus
-      tenetur
-      ea
-      enim, vel qui, dolorum iure sequi dolor! Blanditiis, laborum sit ratione sint praesentium modi?
-      Optio quia a nam animi odit! Facilis incidunt aliquid, perferendis eligendi odio non nam vero labore et. Quaerat
-      esse,
-      ratione asperiores quas, fuga eos nostrum exercitationem placeat, nihil vero facilis!
-      Accusamus cumque in suscipit, ratione eos vel nostrum ducimus reprehenderit voluptas rerum illum ex expedita
-      possimus.
-      Dolorum aspernatur culpa placeat ab in porro temporibus, totam optio voluptas ullam quasi minima!
-      Autem hic, perferendis earum iusto quaerat harum molestiae, eum nobis repellendus voluptatibus natus ullam
-      reprehenderit esse cupiditate deleniti voluptates mollitia. Quidem doloribus quas soluta sed. Quaerat laboriosam
-      optio
-      asperiores error.
+    <div class="stats">
+
     </div>
   </section>
 
@@ -93,7 +77,37 @@
     data() {
       return {
         title: "Who are the characters in the show?",
-        characters: ["penny", "sheldon", "leonard", "raj", "bernadette", "amy"],
+        characters: [{
+          name: 'penny',
+          age: 26,
+          area: 'US',
+          relationship: 'committed'
+        }, {
+          name: 'sheldon',
+          age: 27,
+          area: 'Texas',
+          relationship: 'NA'
+        }, {
+          name: 'leonard',
+          age: 26,
+          area: '',
+          relationship: 'searching'
+        }, {
+          name: 'raj',
+          age: 25,
+          area: 'Mumbai',
+          relationship: 'single'
+        }, {
+          name: 'bernadette',
+          age: 28,
+          area: 'Canada',
+          relationship: 'single'
+        }, {
+          name: 'amy',
+          age: 30,
+          area: 'Asian',
+          relationship: 'committed'
+        }],
         right: "✔️ You are absolutely correct!",
         wrong: "⚠️ Oops! You did not watch The Big Bang Theory Properly!",
         answer: '',
@@ -110,6 +124,11 @@
       addToCharacterList(newCharacter) {
         this.characters.push(newCharacter.toLowerCase())
         console.info('all characters now', this.characters)
+      },
+      capitalizeFirstWord(string) {
+        const words = string.split(' ');
+        words[0] = words[0].charAt(0).toUpperCase() + words[0].slice(1);
+        return words.join(' ');
       }
     }
   }); // app is just that validator
