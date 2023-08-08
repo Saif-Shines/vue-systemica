@@ -36,35 +36,7 @@
 
   </main>
   <section id="app">
-    <h2>{{title}}</h2>
-    <aside>
-      <h3>Favorite Characters</h3>
-      <ol>
-        <li v-for="fav in favoriteCharacters">{{capitalizeFirstWord(fav.name)}}</li>
-      </ol>
-    </aside>
-    <input type="text" size="30" maxlength="30" placeholder="Character" aria-label="character box" v-model="answer">
-    <br>
-    <div v-if="answer == ''">❗Type your answer</div>
-    <div v-else-if="characters.some((actor) => actor.name == answer.toLowerCase())">
-      {{right}}
-      <label for="addCharacter">Did we miss an character? Add it!</label>
-      <input type="text" id="addCharacter" v-model="newCharacter">
-      <button @click="addToCharacterList(newCharacter)" class="favorite-btn">Add</button>
-    </div>
-    <div v-else>
-      {{wrong}}
-      <hr />
-      <ul>
-        <li v-for="actor in characters">
-          {{capitalizeFirstWord(actor.name)}}
-          <button class="favorite-btn" @click="addtoFavList(actor)">Mark Favorite</button>
-        </li>
-      </ul>
-    </div>
-    <div class="stats">
-      The total age of the F.R.I.E.N.D.S Group: {{totalAgeOfGroup}}
-    </div>
+   
   </section>
 
 </body>
