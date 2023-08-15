@@ -1,9 +1,18 @@
 <script>
+import FriendsStats from '@/components/FriendsStats.vue'
+import CharacterCard from '@/components/CharacterCard.vue'
+import AddNewCharacterCard from './components/AddNewCharacter.vue'
+
 export default {
+  components: {
+    FriendsStats,
+    CharacterCard,
+    AddNewCharacterCard
+  },
   data() {
     return {
       title: 'Who are the characters in the show?',
-      characters: [
+      characterList: [
         {
           name: 'penny',
           age: 26,
@@ -44,49 +53,19 @@ export default {
       right: '✔️ You are absolutely correct!',
       wrong: '⚠️ Oops! You did not watch The Big Bang Theory Properly!',
       answer: '',
-      newCharacter: '',
       favoriteCharacters: []
     }
   },
-  computed: {
-    totalAgeOfGroup() {
-      let xSum = 0
-
-      for (let obj of this.characters) {
-        for (let key in obj) {
-          if (key === 'age') {
-            xSum += obj[key]
-          }
-        }
-      }
-
-      console.log(xSum) // 9
-      return xSum
-    },
-    getRelationshipCount() {
-      const statusCount = {}
-
-      this.characters.forEach((character) => {
-        if (statusCount[character.relationship]) {
-          statusCount[character.relationship]++
-        } else {
-          statusCount[character.relationship] = 1
-        }
-      })
-
-      return statusCount
-    }
-  },
   methods: {
-    addtoFavList(value) {
-      console.log('value', value)
-      this.favoriteCharacters.push(value)
+    addtoFavList(payload) {
+      console.log('value', payload)
+      this.favoriteCharacters.push(payload)
       console.log(this.favoriteCharacters)
     },
     addToCharacterList(newCharacter) {
       console.log('newCharacter', newCharacter)
       let capitalizedName = this.capitalizeFirstWord(newCharacter)
-      this.characters.push({ name: capitalizedName })
+      this.characterList.push({ name: capitalizedName, relationship: 'unknown' })
       console.info('all characters now', this.characters)
     },
     capitalizeFirstWord(string) {
@@ -99,19 +78,12 @@ export default {
 </script>
 
 <template>
-  <h2>{{ title }}</h2>
-  <h2>Statistics</h2>
-  <ul>
-    <li v-for="[index, value] in Object.entries(getRelationshipCount)" :key="`${index}`">
-      {{ index }}:
-      {{ value }}
-    </li>
-  </ul>
-  <div class="stats">
-    The total age of the F.R.I.E.N.D.S Group: <mark>{{ totalAgeOfGroup }}</mark>
-  </div>
+  <h1>{{ title }}</h1>
+  <FriendsStats :characters="characterList" />
+  <hr />
   <aside>
     <h3>Favorite Characters</h3>
+    <i>List of Fav characters will appear</i>
     <ol>
       <li v-for="(fav, index) in favoriteCharacters" :key="`${index}`">
         {{ capitalizeFirstWord(fav.name) }}
@@ -122,26 +94,23 @@ export default {
     type="text"
     size="30"
     maxlength="30"
-    placeholder="Character"
+    placeholder="Guess?"
     aria-label="character box"
     v-model="answer"
   />
-  <br />
+  <hr />
   <div v-if="answer == ''">❗Type your answer</div>
-  <div v-else-if="characters.some((actor) => actor.name == answer.toLowerCase())">
+  <div v-else-if="characterList.some((actor) => actor.name == answer.toLowerCase())">
     {{ right }}
-    <label for="addCharacter">Did we miss an character? Add it!</label>
-    <input type="text" id="addCharacter" v-model="newCharacter" />
-    <button @click="addToCharacterList(newCharacter)" class="favorite-btn">Add</button>
   </div>
   <div v-else>
     {{ wrong }}
     <hr />
-    <ul>
-      <li v-for="(actor, index) in characters" :key="`${index}`">
-        {{ capitalizeFirstWord(actor.name) }}
-        <button class="favorite-btn" @click="addtoFavList(actor)">Mark Favorite</button>
-      </li>
-    </ul>
+    <CharacterCard
+      :capitalize="capitalizeFirstWord"
+      :character="characterList"
+      @favorite="addtoFavList"
+    />
   </div>
+  <AddNewCharacterCard @addCharacter="addToCharacterList" />
 </template>
